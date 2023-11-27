@@ -1,23 +1,49 @@
-import { account, appwriteConfig, client } from "./AppWriteConfig";
+import { account, appwriteConfig, client, databases } from "./AppWriteConfig";
+import { ID, Query } from "appwrite";
 import state from './../../store/index';
 import { toast } from 'sonner';
 
-export const messagesSubscribe = (setState) => {
+export const getMessages = async (setState) => {
+    const state = setState
+    const response = await databases.listDocuments(
+        appwriteConfig.databaseId,
+        appwriteConfig.messagesCollectionId
+    )
+    state(response.documents)
+    console.log(response)
+    return response
+}
+export const appWriteChatSubscribe = (setState) => {
     const state = setState
     client.subscribe([`databases.${appwriteConfig.databaseId}.collections.${appwriteConfig.messagesCollectionId}.documents`], (response) => {
         console.log("REALTIME", response)
         if (response.events.includes("databases.*.collections.*.documents.*.create")) {
             console.log("CREATED", response)
-            return state(prevState => [response.payload, ...prevState])
+            // return setState((prevState) => {
+            //     Adiciona o novo elemento ao final da lista
+            //     return [...(prevState || []), response.payload];
+            //     console.log(response.payload)
+            // });
         }
         if (response.events.includes("databases.*.collections.*.documents.*.delete")) {
             console.log("DELETED", response)
-            return state(prevState => prevState.filter(message => message.$id !== response.payload.$id))
+            // return state(prevState => prevState.filter(message => message.$id !== response.payload.$id))
         }
         if (response.events.includes("databases.*.collections.*.documents.*.update")) {
+            console.log("update")
             return
         }
     })
+}
+
+export const appWriteGetChats = async (setMessages) => {
+    const response = await databases.listDocuments(
+        appwriteConfig.databaseId,
+        appwriteConfig.chatsCollectionId
+    )
+    console.log("the chats", response.documents[0].messages)
+    setMessages(response.documents[0].messages)
+    return response
 }
 
 export const checkUser = async () => {
@@ -25,6 +51,13 @@ export const checkUser = async () => {
         const response = await account.get()
         state.user = response
         state.logged = true
+        console.log(response)
+        const userCollection = await databases.listDocuments(
+            appwriteConfig.databaseId,
+            appwriteConfig.userCollectionId,
+            [Query.equal("accountId", response.$id)]
+        )
+        state.userCollection = userCollection.documents[0].$id
         return response
     } catch (error) {
         state.logged = false
@@ -63,6 +96,7 @@ export const appWriteLogout = async () => {
 }
 
 export const appWriteCreateMessage = async (message) => {
-    const response = await client.databases.update(appwriteConfig.databaseId, appwriteConfig.messagesCollectionId, message)
+    console.log("the message:", message)
+    const response = await databases.createDocument(appwriteConfig.databaseId, appwriteConfig.messagesCollectionId, ID.unique(), message)
     return response
 }

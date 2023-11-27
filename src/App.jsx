@@ -5,11 +5,11 @@ import Sidebar from './components/Sidebar';
 
 function App() {
   return (
-    <main>
+    <div className='container'>
       <Toaster richColors />
       <Sidebar />
       <Outlet />
-    </main>
+    </div>
   )
 }
 
