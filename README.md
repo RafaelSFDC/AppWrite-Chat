@@ -1,23 +1,23 @@
 <br/>
 <p align="center">
   <a href="https://github.com/RafaelSFDC/AppWrite-Chat">
-    <img src="images/logo.png" alt="Logo" width="80" height="80">
+    <img src="images/logo.svg" alt="Logo" width="80" height="80">
   </a>
 
   <h3 align="center">ChatWrite</h3>
 
   <p align="center">
-    An AppChat created using AppWrite
+    Um aplicativo de conversa criado usando Appwrite como banco de dados e autenticação. O propósito principal desse projeto é servir como uma extensão de outro projeto que estou fazendo.
     <br/>
     <br/>
     <a href="https://github.com/RafaelSFDC/AppWrite-Chat"><strong>Explore the docs »</strong></a>
     <br/>
     <br/>
-    <a href="https://github.com/RafaelSFDC/AppWrite-Chat">View Demo</a>
+    <!-- <a href="https://github.com/RafaelSFDC/AppWrite-Chat">View Demo</a>
     .
     <a href="https://github.com/RafaelSFDC/AppWrite-Chat/issues">Report Bug</a>
     .
-    <a href="https://github.com/RafaelSFDC/AppWrite-Chat/issues">Request Feature</a>
+    <a href="https://github.com/RafaelSFDC/AppWrite-Chat/issues">Request Feature</a> -->
   </p>
 </p>
 
@@ -31,19 +31,14 @@
   - [Prerequisites](#prerequisites)
   - [Installation](#installation)
 - [Usage](#usage)
-- [License](#license)
-- [Authors](#authors)
-- [Acknowledgements](#acknowledgements)
 
 ## About The Project
 
-![Screen Shot](images/screenshot.png)
+![Screen Shot](public/images/logo.svg)
 
 Esse é um aplicativo criado usando Appwrite como banco de dados e autenticação. O propósito principal desse projeto é servir como uma extensão de outro projeto que estou fazendo. O projeto não requer conhecimentos muito avançados e eu não estou usando nenhuma api externa além do Appwrite.
 
-## Built With
-
-Lista de dependências
+## Lista de dependências
 
 - [Vite](https://vitejs.dev/)
 - [AppWrite](https://appwrite.io/)
@@ -56,7 +51,7 @@ Lista de dependências
 - [React-loader-spinner](https://mhnpd.github.io/react-loader-spinner/)
 - [React-dropzone](https://www.npmjs.com/package/react-dropzone)
 
-## Getting Started
+## Começando
 
 Vou assumir que você já tenha o básico para usar react instalado.
 
@@ -82,7 +77,7 @@ Vou assumir que você já tenha o básico para usar react instalado.
 
 Pronto! Agora com esta configuração você pode criar um chat que terá vários usuários,. Após o chat ser criado você pode criar mensagens que terão um usuário e um chat . Com isso feito se você quiser filtrar uma conversa você só precisa ir na coleção de chat do usuários específicos.
 
-### Prerequisites
+### Pré-requisitos
 
 This is an example of how to list things you need to use the software and how to install them.
 
@@ -92,12 +87,12 @@ This is an example of how to list things you need to use the software and how to
 npm install npm@latest -g
 ```
 
-### Installation
+### Instalação
 
 1. Clone o repositório
 
 ```sh
-git clone https://github.com/your_username_/Project-Name.git
+git clone https://github.com/RafaelSFDC/AppWrite-Chat.git
 ```
 
 2. Instale as Dependências
@@ -119,6 +114,6 @@ VITE_APPWRITE_MESSAGES_COLLECTION_ID=" "
 VITE_APPWRITE_POST_COLLECTION_ID=" "';
 ```
 
-## Usage
+## Uso
 
 Esse é apenas um chat normal, você pode configurar isso do jeito que você quiser. Adicionar encriptação de mensagem, usar SDK, passar as funções para um servidor por mais segurança, etc.
