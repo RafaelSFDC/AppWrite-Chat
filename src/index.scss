@@ -17,9 +17,6 @@ $background-color: #09090a;
   height: 100%;
 }
 
-.element {
-  all: none;
-}
 #root,
 body {
   height: 100vh;
@@ -28,9 +25,26 @@ body {
   background-color: $background-color;
   color: #ffffff;
 }
+
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+}
+h1,
+p {
+  margin: 0;
+}
+
+ul,
+li {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
 button {
   cursor: pointer;
 }
+// ============== Login ==============//
 .login {
   display: flex;
   justify-content: center;
@@ -131,16 +145,58 @@ button {
     }
   }
 }
+// ============== Main App ==============//
+main {
+  flex: 1;
+  height: 100%;
+  display: flex;
+  nav {
+    max-width: 60px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    svg {
+      font-size: 26px;
+    }
+    > * {
+      width: 100%;
+    }
+    div {
+      padding: 20px 0;
+      background: $base-color;
+      display: flex;
+      justify-content: center;
+    }
+    ul {
+      li {
+        padding: 10px 0;
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        border-left: 4px solid transparent;
+        transition: ease-in-out 0.3s;
+        &:focus,
+        &:hover,
+        &.active {
+          background-color: gray;
+          border-left: 4px solid $base-color;
+        }
+        svg {
+          font-size: 22px;
+        }
+      }
+    }
+  }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
-h1,
-p {
-  margin: 0;
+  > div {
+    flex: 1;
+    background: #474554;
+    border-radius: 8px;
+  }
 }
 
+// ============= Loader ==============//
 .Loader {
   width: 100%;
   display: flex;

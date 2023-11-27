@@ -4,25 +4,19 @@ import { FcGoogle } from "react-icons/fc";
 import { FaFacebook } from "react-icons/fa6";
 import ButtonMotion from "../components/framerMotion/Button";
 import Spinner from "../components/Spinner";
-import { useNavigate } from 'react-router-dom'
-import state from "../store";
 import { formatForm } from "../functions";
 import { appWriteLogin } from "../api/appWrite/api";
+import { Toaster } from 'sonner';
 
 const Login = () => {
     const [loading, setLoading] = useState(false);
-    const navigate = useNavigate();
-
     const submitHandler = async (e) => {
         const form = await formatForm(e)
         setLoading(true);
-        setTimeout(() => {
-            setLoading(false);
-        }, 2000);
-        await appWriteLogin(form.email, form.password)
-        // console.log(form.email, form.password)
+        await appWriteLogin(form.email, form.password, setLoading)
     }
     return <div className="login">
+        <Toaster richColors position="top-right" />
         <div>
             <h1>Login</h1>
             <form action="" onSubmit={submitHandler}>
@@ -37,6 +31,7 @@ const Login = () => {
                 {loading ? <Spinner /> : <ButtonMotion type="submit">LOGIN</ButtonMotion>}
             </form>
             <div>
+                {/* eslint-disable-next-line react/no-unescaped-entities */}
                 <p>Don't have an account?</p>
                 <Link to="/register">
                     SIGN UP

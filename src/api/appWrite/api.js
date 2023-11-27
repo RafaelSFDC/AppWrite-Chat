@@ -1,5 +1,6 @@
 import { account, appwriteConfig, client } from "./AppWriteConfig";
 import state from './../../store/index';
+import { toast } from 'sonner';
 
 export const messagesSubscribe = (setState) => {
     const state = setState
@@ -34,15 +35,30 @@ export const checkUser = async () => {
     }
 }
 
-export const appWriteLogin = async (email, password) => {
-    const response = await account.createEmailSession(email, password)
-    const checkUser = await checkUser()
-    console.log(checkUser)
-    return response
+export const appWriteLogin = async (email, password, loading) => {
+    const logInd = async () => {
+        try {
+            const response = await account.createEmailSession(email, password)
+            state.logged = true
+            return response;
+        } catch (error) {
+            throw new Error("Invalid credentials, please try again");
+        } finally {
+            loading(false)
+        }
+    }
+    toast.promise(logInd,
+        {
+            loading: "Logging in...",
+            success: "Logged in successfully",
+            error: "Error logging in, please try again",
+        })
+
 }
 
 export const appWriteLogout = async () => {
-    const response = await client.account.logout()
+    const response = await account.deleteSession('current')
+    state.logged = false
     return response
 }
 

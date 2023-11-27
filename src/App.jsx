@@ -1,11 +1,15 @@
 import './App.css'
-import Room from './pages/Room'
+import { Toaster } from 'sonner'
+import { Outlet } from 'react-router-dom';
+import Sidebar from './components/Sidebar';
 
 function App() {
   return (
-    <>
-      <Room />
-    </>
+    <main>
+      <Toaster richColors />
+      <Sidebar />
+      <Outlet />
+    </main>
   )
 }
 
