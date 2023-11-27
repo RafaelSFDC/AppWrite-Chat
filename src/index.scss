@@ -1,0 +1,154 @@
+$base-color: #3d5af1;
+$border-dark: rgba($base-color, 0.88);
+$background-color: #09090a;
+
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  height: 100%;
+}
+
+.element {
+  all: none;
+}
+#root,
+body {
+  height: 100vh;
+  width: 100%;
+  margin: 0;
+  background-color: $background-color;
+  color: #ffffff;
+}
+button {
+  cursor: pointer;
+}
+.login {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  background-color: transparent;
+  > div {
+    height: 80%;
+    width: clamp(340px, 50vw, 400px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    background-color: #474554;
+    box-sizing: border-box;
+    padding: 40px;
+    align-self: center;
+    border-radius: 5px;
+    text-align: center;
+    > * {
+      width: 100%;
+    }
+    h1 {
+      font-size: 40px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid $base-color;
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+
+      div {
+        display: flex;
+        flex-direction: column;
+      }
+      label {
+        text-align: left;
+      }
+      input {
+        background: transparent;
+        border: none;
+        border-bottom: 2px solid #ffffff;
+        color: #ffffff;
+        font-size: 20px;
+        outline: none;
+        transition: ease-in-out 0.3s;
+        &:focus {
+          border-bottom: 2px solid $background-color;
+        }
+      }
+
+      button {
+        border-radius: 15px;
+        box-sizing: border-box;
+        padding: 8px 0px;
+        background-color: $base-color;
+        color: #ffffff;
+        border: none;
+        font-size: 20px;
+        outline: none;
+      }
+      svg {
+        align-self: center;
+        width: 50px;
+        height: 50px;
+      }
+    }
+    div {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      div {
+        flex-direction: row;
+        justify-content: center;
+        gap: 25px;
+        button {
+          color: blue;
+          font-size: 30px;
+          display: flex;
+          border-radius: 90px;
+          border: none;
+          padding: 10px;
+        }
+      }
+    }
+
+    a {
+      color: #ffffff;
+      font-size: 20px;
+      text-decoration: none;
+      width: fit-content;
+      align-self: center;
+      &:hover {
+        color: $base-color;
+        transition: ease-in-out 0.3s;
+      }
+    }
+  }
+}
+
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+}
+h1,
+p {
+  margin: 0;
+}
+
+.Loader {
+  width: 100%;
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  svg {
+    width: 500px;
+    height: 500px;
+  }
+}
