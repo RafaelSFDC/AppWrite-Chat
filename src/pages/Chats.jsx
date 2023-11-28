@@ -23,8 +23,9 @@ const Chats = () => {
         e.target.reset()
     }
 
-    const chatHandler = (index) => {
+    const chatHandler = (index, id) => {
         state.activeChat = index
+        state.chatId = id
     }
 
     return (
@@ -34,7 +35,6 @@ const Chats = () => {
                 <section>
                     <h2>My Chats</h2>
                     <ul>
-                        {console.log("the chats", snap.chats)}
                         {snap.chats.documents && snap.chats.documents.length ? snap.chats.documents.map((chat, index) => {
                             console.log("MAPING")
                             // Verifica se algum participante tem $id igual ao do usuário
@@ -43,7 +43,7 @@ const Chats = () => {
                             if (hasCurrentUser) {
                                 console.log("MAPING 2")
                                 return (
-                                    <li key={chat.id} onClick={() => chatHandler(index)} className={status.activeChat === index ? 'active' : ''}>
+                                    <li key={chat.id} onClick={() => chatHandler(index, chat.$id)} className={snap.activeChat === index ? 'active' : ''}>
                                         {chat.users && chat.users
                                             .filter(participant => participant.$id !== state.userCollection) // Filtra os participantes diferentes do usuário
                                             .map((participant, index) => (
