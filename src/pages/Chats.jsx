@@ -1,10 +1,11 @@
 import { IoMdSend } from "react-icons/io";
 import { useEffect } from 'react';
-import { appWriteCreateMessage, appWriteGetChats } from './../api/appWrite/api';
+import { appWriteCreateMessage, appWriteDeleteMassege, appWriteGetChats } from './../api/appWrite/api';
 import { motion } from 'framer-motion';
 import state from "../store";
 import { useSnapshot } from "valtio";
 import { formatForm } from "../functions";
+import { IoTrashBin } from "react-icons/io5";
 const Chats = () => {
     const snap = useSnapshot(state)
     useEffect(() => {
@@ -28,7 +29,7 @@ const Chats = () => {
 
     return (
         <main className="chats">
-            <h1>Chats</h1>
+            <h1>CHATS</h1>
             <div>
                 <section>
                     <h2>My Chats</h2>
@@ -75,10 +76,14 @@ const Chats = () => {
                                                 }}
                                                 initial={{ x: -150, opacity: 0 }}
                                                 animate={{ x: 0, opacity: 1 }}
+                                                exit={{ x: 150, opacity: 0 }}
                                                 className="user"
                                                 key={message.$id}
                                             >
                                                 {message.body}
+                                                <motion.div whileHover={{ scale: 1.2 }}>
+                                                    <IoTrashBin onClick={() => appWriteDeleteMassege(message)} />
+                                                </motion.div>
                                             </motion.li>
                                             : <motion.li
                                                 transition={{
@@ -87,8 +92,10 @@ const Chats = () => {
                                                 }}
                                                 initial={{ x: -150, opacity: 0 }}
                                                 animate={{ x: 0, opacity: 1 }}
+                                                exit={{ x: 150, opacity: 0 }}
                                                 key={message.$id}
                                             >
+                                                <motion.img whileHover={{ scale: 1.2 }} src={message.user[0].profileImage ? message.user[0].profileImage : "https://cdn-icons-png.flaticon.com/512/149/149071.png"} alt="userPhoto" />
                                                 {message.body}
                                             </motion.li>
                                     ))}

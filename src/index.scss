@@ -151,12 +151,31 @@ button {
   flex: 1;
   height: 100%;
   display: flex;
+  h1 {
+    background-color: $base-color;
+    color: #ffffff;
+    box-sizing: border-box;
+    max-height: 70px;
+    height: 70px;
+    display: flex;
+    align-content: center;
+    flex-wrap: wrap;
+    border: none;
+  }
   nav {
     max-width: 60px;
     flex: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
+    ul {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      .logout {
+        margin-top: auto;
+      }
+    }
     svg {
       font-size: 26px;
     }
@@ -168,6 +187,9 @@ button {
       background: $base-color;
       display: flex;
       justify-content: center;
+      box-sizing: border-box;
+      max-height: 70px;
+      height: 70px;
     }
     ul {
       li {
@@ -281,8 +303,25 @@ main {
             border-radius: 3px;
             padding: 10px;
             width: fit-content;
+            display: flex;
+            gap: 10px;
             &.user {
               align-self: flex-end;
+              display: flex;
+              align-items: center;
+              div {
+                display: flex;
+                align-items: center;
+              }
+              svg {
+                font-size: 18px;
+                color: #e0002d;
+                cursor: pointer;
+              }
+            }
+            img {
+              width: 24px;
+              cursor: pointer;
             }
           }
         }
