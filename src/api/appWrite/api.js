@@ -13,17 +13,21 @@ export const getMessages = async (setState) => {
     console.log(response)
     return response
 }
-export const appWriteChatSubscribe = (setState) => {
-    const state = setState
+export const appWriteChatSubscribe = () => {
+    const updateState = (response) => {
+        const chatId = response.payload.chat[0].$id;
+        const index = state.chats.documents.findIndex((doc) => doc.$id === chatId);
+        if (index !== -1) {
+            state.chats.documents[index].messages.push(response.payload);
+        }
+    };
+
     client.subscribe([`databases.${appwriteConfig.databaseId}.collections.${appwriteConfig.messagesCollectionId}.documents`], (response) => {
         console.log("REALTIME", response)
         if (response.events.includes("databases.*.collections.*.documents.*.create")) {
             console.log("CREATED", response)
-            // return setState((prevState) => {
-            //     Adiciona o novo elemento ao final da lista
-            //     return [...(prevState || []), response.payload];
-            //     console.log(response.payload)
-            // });
+            updateState(response)
+
         }
         if (response.events.includes("databases.*.collections.*.documents.*.delete")) {
             console.log("DELETED", response)
@@ -36,13 +40,14 @@ export const appWriteChatSubscribe = (setState) => {
     })
 }
 
-export const appWriteGetChats = async (setMessages) => {
+export const appWriteGetChats = async () => {
     const response = await databases.listDocuments(
         appwriteConfig.databaseId,
         appwriteConfig.chatsCollectionId
     )
-    console.log("the chats", response.documents[0].messages)
-    setMessages(response.documents[0].messages)
+    console.log("the chats", response)
+    state.chats = response
+    appWriteChatSubscribe()
     return response
 }
 
@@ -96,7 +101,16 @@ export const appWriteLogout = async () => {
 }
 
 export const appWriteCreateMessage = async (message) => {
-    console.log("the message:", message)
-    const response = await databases.createDocument(appwriteConfig.databaseId, appwriteConfig.messagesCollectionId, ID.unique(), message)
+    console.log("BODY SENDED:    ", message)
+    const response = await databases.createDocument(appwriteConfig.databaseId, appwriteConfig.messagesCollectionId, ID.unique(), {
+        body: message.body,
+        chat: [
+            message.chat
+        ],
+        user: [
+            message.user
+        ]
+    })
+    console.log("RESPONSE", response)
     return response
 }

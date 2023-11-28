@@ -5,7 +5,9 @@ const state = proxy({
     logged: "",
     loading: true,
     userCollection: "",
-    chatId: "6564db66c3ebef74b1b2",
+    chatId: "65657670c056f50b1ca1",
+    chats: [],
+    activeChat: null,
 });
 
 

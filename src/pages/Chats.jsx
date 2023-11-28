@@ -8,14 +8,10 @@ import { formatForm } from "../functions";
 
 
 const Chats = () => {
-    const [messages, setMessages] = useState([]);
-    useSnapshot(state)
-
+    const snap = useSnapshot(state)
     useEffect(() => {
-        appWriteChatSubscribe(setMessages)
         return () => {
-
-            appWriteGetChats(setMessages)
+            appWriteGetChats()
         }
     }, []);
 
@@ -26,51 +22,86 @@ const Chats = () => {
         appWriteCreateMessage(form)
         e.target.reset()
     }
+
+    const chatHandler = (index) => {
+        state.activeChat = index
+    }
+
     return (
         <main className="chats">
             <h1>Chats</h1>
             <div>
-                <section>chatsList</section>
+                <section>
+                    <h2>My Chats</h2>
+                    <ul>
+                        {console.log("the chats", snap.chats)}
+                        {snap.chats.documents && snap.chats.documents.length ? snap.chats.documents.map((chat, index) => {
+                            console.log("MAPING")
+                            // Verifica se algum participante tem $id igual ao do usuário
+                            const hasCurrentUser = chat.users && chat.users.some(participant => participant.$id === state.userCollection);
+                            // Se houver algum participante com $id igual ao do usuário, renderiza
+                            if (hasCurrentUser) {
+                                console.log("MAPING 2")
+                                return (
+                                    <li key={chat.id} onClick={() => chatHandler(index)} className={status.activeChat === index ? 'active' : ''}>
+                                        {chat.users && chat.users
+                                            .filter(participant => participant.$id !== state.userCollection) // Filtra os participantes diferentes do usuário
+                                            .map((participant, index) => (
+                                                <p key={index}>Chat with: {participant.username}</p>
+                                            ))}
+                                    </li>
+                                );
+                            }
+                            // Se não houver participantes com $id igual ao do usuário, não renderiza
+                            return
+
+                        }) : <h4>No chats found</h4>}
+                    </ul>
+                </section>
                 <div>
-                    <div className="chat">
-                        <div>User</div>
-                        <ul>
-                            {messages.map(message => (
-                                message.user.$id === state.userCollection ?
-                                    <motion.li
-                                        transition={{
-                                            duration: 1,
-                                            ease: "easeInOut"
-                                        }}
-                                        initial={{ x: -150, opacity: 0 }}
-                                        animate={{ x: 0, opacity: 1 }}
-                                        className="user"
-                                        key={message.$id}
-                                    >
-                                        {message.body}
-                                    </motion.li>
-                                    : <motion.li
-                                        transition={{
-                                            duration: 1,
-                                            ease: "easeInOut"
-                                        }}
-                                        initial={{ x: -150, opacity: 0 }}
-                                        animate={{ x: 0, opacity: 1 }}
-                                        key={message.$id}
-                                    >
-                                        {message.body}
-                                    </motion.li>
-                            ))}
-                        </ul>
-                    </div>
-                    <form onSubmit={formHandler}>
-                        {/* <button type="button">+</button> */}
-                        <textarea name="body" cols="30" rows="10"></textarea>
-                        {/* <button type="button">emoji</button> */}
-                        <button type="submit">
-                            <IoMdSend />
-                        </button>
-                    </form>
+                    {
+                        snap.activeChat !== null && snap.chats ? <>
+                            <div className="chat">
+                                <div>User</div>
+                                <ul>
+                                    {snap.chats.documents[snap.activeChat].messages.map(message => (
+                                        message.user[0].$id === state.userCollection ?
+                                            <motion.li
+                                                transition={{
+                                                    duration: 1,
+                                                    ease: "easeInOut"
+                                                }}
+                                                initial={{ x: -150, opacity: 0 }}
+                                                animate={{ x: 0, opacity: 1 }}
+                                                className="user"
+                                                key={message.$id}
+                                            >
+                                                {message.body}
+                                            </motion.li>
+                                            : <motion.li
+                                                transition={{
+                                                    duration: 1,
+                                                    ease: "easeInOut"
+                                                }}
+                                                initial={{ x: -150, opacity: 0 }}
+                                                animate={{ x: 0, opacity: 1 }}
+                                                key={message.$id}
+                                            >
+                                                {message.body}
+                                            </motion.li>
+                                    ))}
+                                </ul>
+                            </div>
+                            <form onSubmit={formHandler}>
+                                {/* <button type="button">+</button> */}
+                                <textarea name="body" cols="30" rows="10"></textarea>
+                                {/* <button type="button">emoji</button> */}
+                                <button type="submit">
+                                    <IoMdSend />
+                                </button>
+                            </form>
+                        </> : null
+                    }
                 </div>
             </div>
         </main>

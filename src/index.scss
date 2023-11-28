@@ -228,12 +228,32 @@ main {
   > div {
     display: flex;
     flex: 1;
+    overflow: hidden;
     > * {
       flex: 1;
       padding: 20px;
     }
     > section {
       max-width: 200px;
+      h4 {
+        color: gray;
+      }
+      ul {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+      }
+      li {
+        cursor: pointer;
+        border-left: 3px gray solid;
+        padding: 10px;
+        background-color: lightcyan;
+        border-radius: 3px;
+
+        &.active {
+          border-left: 3px solid $base-color;
+        }
+      }
     }
 
     > div {
@@ -248,8 +268,8 @@ main {
         justify-content: center;
         gap: 25px;
         flex: 1;
+        overflow-y: auto;
         > ul {
-          flex: 1;
           display: flex;
           flex-direction: column;
           gap: 5px;
