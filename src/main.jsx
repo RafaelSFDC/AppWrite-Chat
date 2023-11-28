@@ -10,6 +10,7 @@ import Room from './pages/Room.jsx'
 import Chats from './pages/Chats';
 import Settings from './pages/Settings';
 import Users from './pages/Users';
+import Register from './pages/Register.jsx'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
@@ -17,6 +18,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <Routes>
         <Route element={<IsLogged />}>
           <Route path='/login' element={<Login />} />
+          <Route path="/register" element={<Register />} />
         </Route>
         <Route element={<AuthProvider />}>
           <Route path="/" element={<App />} >

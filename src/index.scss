@@ -246,12 +246,15 @@ main {
       li {
         cursor: pointer;
         border-left: 3px gray solid;
+        border-bottom: 3px gray solid;
         padding: 10px;
         background-color: lightcyan;
+
         border-radius: 3px;
 
         &.active {
           border-left: 3px solid $base-color;
+          border-bottom: 3px solid $base-color;
         }
       }
     }

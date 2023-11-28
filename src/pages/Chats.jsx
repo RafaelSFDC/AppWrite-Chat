@@ -1,12 +1,10 @@
 import { IoMdSend } from "react-icons/io";
-import { useEffect, useState } from 'react';
-import { appWriteCreateMessage, appWriteGetChats, appWriteChatSubscribe } from './../api/appWrite/api';
+import { useEffect } from 'react';
+import { appWriteCreateMessage, appWriteGetChats } from './../api/appWrite/api';
 import { motion } from 'framer-motion';
 import state from "../store";
 import { useSnapshot } from "valtio";
 import { formatForm } from "../functions";
-
-
 const Chats = () => {
     const snap = useSnapshot(state)
     useEffect(() => {
@@ -43,13 +41,17 @@ const Chats = () => {
                             if (hasCurrentUser) {
                                 console.log("MAPING 2")
                                 return (
-                                    <li key={chat.id} onClick={() => chatHandler(index, chat.$id)} className={snap.activeChat === index ? 'active' : ''}>
+                                    <motion.li whileHover={{
+                                        scale: 1.05,
+                                        transition: { duration: 0.2 },
+                                    }}
+                                        whileTap={{ scale: 0.9 }} key={chat.id} onClick={() => chatHandler(index, chat.$id)} className={snap.activeChat === index ? 'active' : ''}>
                                         {chat.users && chat.users
                                             .filter(participant => participant.$id !== state.userCollection) // Filtra os participantes diferentes do usuário
                                             .map((participant, index) => (
                                                 <p key={index}>Chat with: {participant.username}</p>
                                             ))}
-                                    </li>
+                                    </motion.li>
                                 );
                             }
                             // Se não houver participantes com $id igual ao do usuário, não renderiza
