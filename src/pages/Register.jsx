@@ -31,7 +31,7 @@ const Register = () => {
     return <div className="login">
         <Toaster richColors position="top-right" />
         <div>
-            <h1>Create Account</h1>
+            <h1>Register</h1>
             <form action="" onSubmit={submitHandler}>
                 <div>
                     <label htmlFor="email">Username</label>

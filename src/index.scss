@@ -171,7 +171,7 @@ button {
     ul {
       display: flex;
       flex-direction: column;
-      height: 100%;
+      flex: 1;
       .logout {
         margin-top: auto;
       }
@@ -286,18 +286,44 @@ main {
       flex-direction: column;
       gap: 10px;
       flex: 1;
-      background-color: #aca9bb;
-
+      background-color: #474554;
       .chat {
         flex-direction: column;
-        justify-content: center;
-        gap: 25px;
+        display: flex;
+        gap: 15px;
         flex: 1;
         overflow-y: auto;
+        .header {
+          background-color: #f9f871;
+          border-radius: 3px;
+          padding: 15px 10px;
+          display: flex;
+          gap: 20px;
+          img {
+            height: 24px;
+          }
+          span {
+            font-size: 20px;
+            font-weight: 600;
+          }
+          div {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            div {
+              gap: 0;
+              cursor: pointer;
+            }
+          }
+          p {
+            font-size: 20px;
+          }
+        }
         > ul {
           display: flex;
           flex-direction: column;
           gap: 5px;
+          overflow-x: hidden;
           li {
             background-color: #ffffff;
             border-radius: 3px;
