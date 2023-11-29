@@ -63,23 +63,20 @@ Vou assumir que você já tenha o básico para usar react instalado.
    > Se a Database for configurado de forma errada o projeto não vai funcionar então preste atenção em cada etapa.
 5. Na coleção Users você vai adicionar 2 Attributes do tipo relationship.
 
-- Messages : relationship = One-way relationship, Attribute Key = messages, Relation > One to many, On deleting a document = Set null
-- Chats: relationship = Two-way relationship, Attribute Key = chats, Attribute Key (related collection) = participants, Relation > One to many, On deleting a document = Set null
+- Messages : relationship = Two-way relationship, Attribute Key = messages, Relation > Many to many, On deleting a document = Set null
+- Chats: relationship = Two-way relationship, Attribute Key = chats, Attribute Key (related collection) = users, Relation > Many to many, On deleting a document = Set null
 
 6. Na coleção Chats você vai criar 1 relação com Messages.
 
-- One-way relationship, Attribute Key = messages, Relation > One to many, On deleting a document = Set null
+- Two-way relationship, Attribute Key = messages, Relation > Many to many, On deleting a document = Set null
 
-7. If for some reason Messages dosent have relations with the other two, you will have to set this up.
+7. Se por algum motivo Messages não tiver relações criadas com os outros dois crie agora, mesmas configurações.
 
-- Users: One-way relationship, Attribute Key = messages, Relation > Many to one, On deleting a document = Set null
-- Chats: One-way relationship, Attribute Key = chats, Relation > Many to one, On deleting a document = Set null
+- Crie um atributo do tipo string e de o nome de body, pode criar url também e por img, se quiser conseguir mandar imagens, embora eu não tenha configurado
 
 Pronto! Agora com esta configuração você pode criar um chat que terá vários usuários,. Após o chat ser criado você pode criar mensagens que terão um usuário e um chat . Com isso feito se você quiser filtrar uma conversa você só precisa ir na coleção de chat do usuários específicos.
 
 ### Pré-requisitos
-
-This is an example of how to list things you need to use the software and how to install them.
 
 - npm
 
@@ -101,19 +98,19 @@ git clone https://github.com/RafaelSFDC/AppWrite-Chat.git
 npm install ou yarn
 ```
 
-3. Crie seu arquivo .env e configure suas chaves
+3. Crie seu arquivo .env e configure suas chaves, o nome das chaves é bem direto ao ponto então não acho que devam ter dificuldade
 
 ```JS
-VITE_APPWRITE_PROJECT_ID=" "
-VITE_APPWRITE_URL=" "
-VITE_APPWRITE_STORAGE_ID=" "
-VITE_APPWRITE_DATABASE_ID=" "
-VITE_APPWRITE_SAVES_COLLECTION_ID=" "
-VITE_APPWRITE_USER_COLLECTION_ID=" "
-VITE_APPWRITE_MESSAGES_COLLECTION_ID=" "
-VITE_APPWRITE_POST_COLLECTION_ID=" "';
+VITE_APPWRITE_PROJECT_ID=""
+VITE_APPWRITE_URL=""
+VITE_APPWRITE_STORAGE_ID=""
+VITE_APPWRITE_DATABASE_ID=""
+VITE_APPWRITE_USER_COLLECTION_ID=""
+VITE_APPWRITE_MESSAGES_COLLECTION_ID=""
+VITE_APPWRITE_CHATS_COLLECTION_ID=""
+
 ```
 
 ## Uso
 
-Esse é apenas um chat normal, você pode configurar isso do jeito que você quiser. Adicionar encriptação de mensagem, usar SDK, passar as funções para um servidor por mais segurança, etc.
+Esse projeto foi feito como um experimento para uma aplicação futura caso eu vá utilizar appWrite, justamente por isso não me utilizei de nenhuma api
