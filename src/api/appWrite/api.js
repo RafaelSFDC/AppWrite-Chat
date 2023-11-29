@@ -86,6 +86,32 @@ export const appWriteChatSubscribe = () => {
             }
         }
     };
+    const deleteChat = (response) => {
+        const chatId = response.payload.$id;
+        const index = state.chats.documents.findIndex((doc) => doc.$id === chatId);
+        if (index !== -1) {
+            state.chats.documents.splice(index, 1);
+            state.activeChat = null
+        }
+    };
+
+
+    client.subscribe([`databases.${appwriteConfig.databaseId}.collections.${appwriteConfig.chatsCollectionId}.documents`], (response) => {
+        console.log("REALTIME", response)
+        if (response.events.includes("databases.*.collections.*.documents.*.create")) {
+            console.log("CREATED", response)
+            state.chats.documents.push(response.payload)
+
+        }
+        if (response.events.includes("databases.*.collections.*.documents.*.delete")) {
+            console.log("DELETED", response)
+            deleteChat(response)
+        }
+        if (response.events.includes("databases.*.collections.*.documents.*.update")) {
+            console.log("update")
+            return
+        }
+    })
 
     client.subscribe([`databases.${appwriteConfig.databaseId}.collections.${appwriteConfig.messagesCollectionId}.documents`], (response) => {
         console.log("REALTIME", response)
@@ -199,6 +225,19 @@ export async function appWriteDeleteMassege(message) {
             appwriteConfig.databaseId,
             appwriteConfig.messagesCollectionId,
             message.$id
+        );
+    } catch (error) {
+        console.log(error)
+        throw error
+    }
+}
+export async function appWriteDeleteChat(chat) {
+    console.log(chat)
+    try {
+        await databases.deleteDocument(
+            appwriteConfig.databaseId,
+            appwriteConfig.chatsCollectionId,
+            chat
         );
     } catch (error) {
         console.log(error)

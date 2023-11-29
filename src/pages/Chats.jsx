@@ -1,10 +1,11 @@
 import { IoMdSend } from "react-icons/io";
-import { appWriteCreateMessage, appWriteDeleteMassege, appWriteGetChats } from './../api/appWrite/api';
+import { appWriteCreateMessage, appWriteDeleteChat, appWriteDeleteMassege, appWriteGetChats } from './../api/appWrite/api';
 import { motion, AnimatePresence } from 'framer-motion';
 import state from "../store";
 import { useSnapshot } from "valtio";
 import { formatForm } from "../functions";
 import { IoTrashBin } from "react-icons/io5";
+import { toast } from 'sonner';
 const Chats = () => {
     const snap = useSnapshot(state)
 
@@ -21,6 +22,19 @@ const Chats = () => {
         state.chatId = id
     }
 
+    const deleteChat = (id) => {
+        toast.promise(appWriteDeleteChat(id),
+            {
+                loading: "Deleting chat...",
+                success: () => {
+                    return "Chat deleted successfully"
+                },
+                error: (error) => {
+                    return `Chat deletion failed. ${error}`
+                },
+            })
+    }
+
     return (
         <main className="chats">
             <h1>CHATS</h1>
@@ -33,11 +47,16 @@ const Chats = () => {
                                 const hasCurrentUser = chat.users && chat.users.some(participant => participant.$id === state.userCollection);
                                 if (hasCurrentUser) {
                                     return (
-                                        <motion.li whileHover={{
-                                            scale: 1.05,
-                                            transition: { duration: 0.2 },
-                                        }}
-                                            whileTap={{ scale: 0.9 }} key={chat.id} onClick={() => chatHandler(index, chat.$id)} className={snap.activeChat === index ? 'active' : ''}>
+                                        <motion.li
+                                            whileHover={{
+                                                scale: 1.05,
+                                                transition: { duration: 0.2 },
+                                            }}
+                                            whileTap={{ scale: 0.9 }}
+                                            exit={{ x: -150, opacity: 0 }}
+                                            key={chat.id}
+                                            onClick={() => chatHandler(index, chat.$id)}
+                                            className={snap.activeChat === index ? 'active' : ''}>
                                             {chat.users && chat.users
                                                 .filter(participant => participant.$id !== state.userCollection) // Filtra os participantes diferentes do usuário
                                                 .map((participant, index) => (
@@ -73,6 +92,9 @@ const Chats = () => {
                                         }
                                         )}
                                     </div>
+                                    <motion.div whileHover={{ scale: 1.2 }}>
+                                        <IoTrashBin onClick={() => deleteChat(snap.chats.documents[snap.activeChat].$id)} />
+                                    </motion.div>
                                 </div>
                                 <ul>
                                     <AnimatePresence>

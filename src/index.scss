@@ -257,6 +257,7 @@ main {
     }
     > section {
       max-width: 200px;
+      overflow-y: scroll;
       h4 {
         color: gray;
       }
@@ -319,6 +320,11 @@ main {
             font-size: 20px;
           }
         }
+        svg {
+          font-size: 18px;
+          color: #e0002d;
+          cursor: pointer;
+        }
         > ul {
           display: flex;
           flex-direction: column;
@@ -338,11 +344,6 @@ main {
               div {
                 display: flex;
                 align-items: center;
-              }
-              svg {
-                font-size: 18px;
-                color: #e0002d;
-                cursor: pointer;
               }
             }
             img {

@@ -15,7 +15,7 @@ function App() {
 
   return (
     <div className='container'>
-      <Toaster richColors />
+      <Toaster richColors position="top-right" />
       <Sidebar />
       <Outlet />
     </div>

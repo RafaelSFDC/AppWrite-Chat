@@ -36,9 +36,7 @@ const Users = () => {
                     <h2>List of Users</h2>
                     <ul>
                         {snap.users.documents && snap.users.documents.length > 0 ? snap.users.documents.map((user, index) => {
-                            console.log("MAPING")
                             if (user.$id === state.userCollection) {
-                                console.log("Esse é o usuario logado: ", user)
                                 return
                             } else {
                                 return (
@@ -57,7 +55,6 @@ const Users = () => {
                             }
 
                         }) : <h4>No users found</h4>}
-                        {console.log("USERS", snap.users.documents)}
                     </ul>
                 </section>
                 <div className="userInfoContainer">
