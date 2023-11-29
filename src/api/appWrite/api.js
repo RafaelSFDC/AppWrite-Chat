@@ -109,7 +109,7 @@ export const appWriteGetUsers = async () => {
         appwriteConfig.databaseId,
         appwriteConfig.userCollectionId,
     )
-    console.log("the chats", response)
+    console.log("the users", response)
     state.users = response
     return response
 }
@@ -174,6 +174,17 @@ export const appWriteCreateMessage = async (message) => {
         ],
         user: [
             message.user
+        ]
+    })
+    console.log("RESPONSE", response)
+    return response
+}
+export const appWriteCreateChat = async () => {
+
+    const response = await databases.createDocument(appwriteConfig.databaseId, appwriteConfig.chatsCollectionId, ID.unique(), {
+        users: [
+            state.activeUserInfo.$id,
+            state.userCollection
         ]
     })
     console.log("RESPONSE", response)

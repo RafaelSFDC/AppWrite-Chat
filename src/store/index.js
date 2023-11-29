@@ -8,6 +8,10 @@ const state = proxy({
     chatId: "65657670c056f50b1ca1",
     chats: [],
     activeChat: null,
+    users: [],
+    activeUser: null,
+    activeUserInfo: null,
+
 });
 
 

@@ -379,4 +379,31 @@ main {
       }
     }
   }
+  .userInfoContainer {
+    display: flex;
+    align-items: center;
+    .userInfo {
+      display: flex;
+      gap: 10px;
+      background-color: #f9f871;
+      align-items: center;
+      padding: 20px;
+      border-radius: 3px;
+      width: 50%;
+      justify-content: space-between;
+      button {
+        cursor: pointer;
+        padding: 15px;
+        border: none;
+        font-size: 24px;
+        background-color: $base-color;
+        color: white;
+      }
+      img {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+      }
+    }
+  }
 }

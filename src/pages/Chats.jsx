@@ -1,5 +1,4 @@
 import { IoMdSend } from "react-icons/io";
-import { useEffect } from 'react';
 import { appWriteCreateMessage, appWriteDeleteMassege, appWriteGetChats } from './../api/appWrite/api';
 import { motion, AnimatePresence } from 'framer-motion';
 import state from "../store";
@@ -8,11 +7,6 @@ import { formatForm } from "../functions";
 import { IoTrashBin } from "react-icons/io5";
 const Chats = () => {
     const snap = useSnapshot(state)
-    useEffect(() => {
-        return () => {
-            appWriteGetChats()
-        }
-    }, []);
 
     const formHandler = async (e) => {
         const form = await formatForm(e)
