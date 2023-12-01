@@ -11,6 +11,7 @@ import Chats from './pages/Chats';
 import Settings from './pages/Settings';
 import Users from './pages/Users';
 import Register from './pages/Register.jsx'
+import Chats2 from './pages/chats/Chats2';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
@@ -23,7 +24,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <Route element={<AuthProvider />}>
           <Route path="/" element={<App />} >
             <Route path="/" element={<Room />} />
-            <Route path="/chat" element={<Chats />} />
+            <Route path="/chats" element={<Chats2 />} />
             <Route path="/settings" element={<Settings />} />
             <Route path="/users" element={<Users />} />
           </Route>

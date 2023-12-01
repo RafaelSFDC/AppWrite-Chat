@@ -24,7 +24,7 @@ export const checkUser = async () => {
         state.logged = false
         return false
     } finally {
-        state.loading = false
+        state.loading.start = false
         // return
     }
 }
@@ -67,7 +67,7 @@ export const appWriteGetChats = async () => {
     return response
 }
 export const appWriteChatSubscribe = () => {
-    const updateState = (response) => {
+    const updateState = async (response) => {
         const chatId = response.payload.chat[0].$id;
         const index = state.chats.documents.findIndex((doc) => doc.$id === chatId);
         if (index !== -1) {
@@ -101,6 +101,12 @@ export const appWriteChatSubscribe = () => {
         if (response.events.includes("databases.*.collections.*.documents.*.create")) {
             console.log("CREATED", response)
             state.chats.documents.push(response.payload)
+            if (state.chatCrated) {
+                console.log("THIS ACTIVATED")
+                const chatIndex = state.chats.documents.findIndex((chat) => chat.users.some((user) => user.$id === state.userCollection) && chat.users.some((user) => user.$id === state.activeUserId))
+                state.activeChat = chatIndex
+                state.chatCrated = false
+            }
 
         }
         if (response.events.includes("databases.*.collections.*.documents.*.delete")) {
@@ -205,11 +211,11 @@ export const appWriteCreateMessage = async (message) => {
     console.log("RESPONSE", response)
     return response
 }
-export const appWriteCreateChat = async () => {
+export const appWriteCreateChat = async (id) => {
 
     const response = await databases.createDocument(appwriteConfig.databaseId, appwriteConfig.chatsCollectionId, ID.unique(), {
         users: [
-            state.activeUserInfo.$id,
+            id,
             state.userCollection
         ]
     })

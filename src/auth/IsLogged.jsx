@@ -9,7 +9,7 @@ const IsLogged = () => {
     useEffect(() => {
         checkUser()
     }, []);
-    if (state.loading) {
+    if (state.loading.start) {
         return <Spinner />
     }
     return (

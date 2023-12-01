@@ -1,5 +1,5 @@
 import { IoMdSend } from "react-icons/io";
-import { appWriteCreateMessage, appWriteDeleteChat, appWriteDeleteMassege, appWriteGetChats } from './../api/appWrite/api';
+import { appWriteCreateMessage, appWriteDeleteChat, appWriteDeleteMassege } from './../api/appWrite/api';
 import { motion, AnimatePresence } from 'framer-motion';
 import state from "../store";
 import { useSnapshot } from "valtio";
@@ -36,7 +36,7 @@ const Chats = () => {
     }
 
     return (
-        <main className="chats">
+        <div className="chats">
             <h1>CHATS</h1>
             <div>
                 <section>
@@ -72,82 +72,84 @@ const Chats = () => {
                 </section>
                 <div>
                     {
-                        snap.activeChat !== null && snap.chats ? <>
-                            <div className="chat">
-                                <div className="header">
-                                    <span>Users:</span>
-                                    <div>
-                                        {snap.chats.documents[snap.activeChat].users.map((participant, index) => {
-                                            if (participant.$id !== state.userCollection) {
-                                                return <motion.div whileHover={{ scale: 1.1 }} key={participant.$id + state.userCollection}>
-                                                    <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="" />
-                                                    <p key={participant.$id + index}>{participant.username}</p>
-                                                </motion.div>
-                                            } else {
-                                                return <motion.div whileHover={{ scale: 1.1 }} key={participant.$id + state.userCollection}>
-                                                    <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="" />
-                                                    <p key={participant.$id + index}>You</p>
-                                                </motion.div>
-                                            }
-                                        }
-                                        )}
-                                    </div>
-                                    <motion.div whileHover={{ scale: 1.2 }}>
-                                        <IoTrashBin onClick={() => deleteChat(snap.chats.documents[snap.activeChat].$id)} />
-                                    </motion.div>
-                                </div>
-                                <ul>
-                                    <AnimatePresence>
-                                        {snap.chats.documents[snap.activeChat].messages.map(message => (
-                                            message.user[0].$id === state.userCollection ?
-                                                <motion.li
-                                                    transition={{
-                                                        duration: 0.8,
-                                                        ease: "easeInOut"
-                                                    }}
-                                                    initial={{ x: -150, opacity: 0 }}
-                                                    animate={{ x: 0, opacity: 1 }}
-                                                    exit={{ x: 150, opacity: 0 }}
-                                                    className="user"
-                                                    key={message.$id}
-                                                >
-                                                    {message.body}
-                                                    <motion.div whileHover={{ scale: 1.2 }}>
-                                                        <IoTrashBin onClick={() => appWriteDeleteMassege(message)} />
+                        snap.activeChat !== null && snap.chats ?
+                            <>
+                                <div className="chat">
+                                    <div className="header">
+                                        <span>Users:</span>
+                                        <div>
+                                            {snap.chats.documents[snap.activeChat].users.map((participant, index) => {
+                                                if (participant.$id !== state.userCollection) {
+                                                    return <motion.div whileHover={{ scale: 1.1 }} key={participant.$id + state.userCollection}>
+                                                        <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="" />
+                                                        <p key={participant.$id + index}>{participant.username}</p>
                                                     </motion.div>
-                                                </motion.li>
-                                                :
-                                                <motion.li
-                                                    transition={{
-                                                        duration: 0.8,
-                                                        ease: "easeInOut"
-                                                    }}
-                                                    initial={{ x: -150, opacity: 0 }}
-                                                    animate={{ x: 0, opacity: 1 }}
-                                                    exit={{ x: 150, opacity: 0 }}
-                                                    key={message.$id}
-                                                >
-                                                    <motion.img whileHover={{ scale: 1.2 }} src={message.user[0].profileImage ? message.user[0].profileImage : "https://cdn-icons-png.flaticon.com/512/149/149071.png"} alt="userPhoto" />
-                                                    {message.body}
-                                                </motion.li>
-                                        ))}
-                                    </AnimatePresence>
+                                                } else {
+                                                    return <motion.div whileHover={{ scale: 1.1 }} key={participant.$id + state.userCollection}>
+                                                        <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="" />
+                                                        <p key={participant.$id + index}>You</p>
+                                                    </motion.div>
+                                                }
+                                            }
+                                            )}
+                                        </div>
+                                        <motion.div whileHover={{ scale: 1.2 }}>
+                                            <IoTrashBin onClick={() => deleteChat(snap.chats.documents[snap.activeChat].$id)} />
+                                        </motion.div>
+                                    </div>
+                                    <ul>
+                                        <AnimatePresence>
+                                            {snap.chats.documents[snap.activeChat].messages.map(message => (
+                                                message.user[0].$id === state.userCollection ?
+                                                    <motion.li
+                                                        transition={{
+                                                            duration: 0.8,
+                                                            ease: "easeInOut"
+                                                        }}
+                                                        initial={{ x: -150, opacity: 0 }}
+                                                        animate={{ x: 0, opacity: 1 }}
+                                                        exit={{ x: 150, opacity: 0 }}
+                                                        className="user"
+                                                        key={message.$id}
+                                                    >
+                                                        {message.body}
+                                                        <motion.div whileHover={{ scale: 1.2 }}>
+                                                            <IoTrashBin onClick={() => appWriteDeleteMassege(message)} />
+                                                        </motion.div>
+                                                    </motion.li>
+                                                    :
+                                                    <motion.li
+                                                        transition={{
+                                                            duration: 0.8,
+                                                            ease: "easeInOut"
+                                                        }}
+                                                        initial={{ x: -150, opacity: 0 }}
+                                                        animate={{ x: 0, opacity: 1 }}
+                                                        exit={{ x: 150, opacity: 0 }}
+                                                        key={message.$id}
+                                                    >
+                                                        <motion.img whileHover={{ scale: 1.2 }} src={message.user[0].profileImage ? message.user[0].profileImage : "https://cdn-icons-png.flaticon.com/512/149/149071.png"} alt="userPhoto" />
+                                                        {message.body}
+                                                    </motion.li>
+                                            ))}
+                                        </AnimatePresence>
 
-                                </ul>
-                            </div>
-                            <form onSubmit={formHandler}>
-                                {/* <button type="button">+</button> */}
-                                <textarea name="body" cols="30" rows="10"></textarea>
-                                {/* <button type="button">emoji</button> */}
-                                <button type="submit">
-                                    <IoMdSend />
-                                </button>
-                            </form>
-                        </> : null
+                                    </ul>
+                                </div>
+                                <form onSubmit={formHandler}>
+                                    {/* <button type="button">+</button> */}
+                                    <textarea name="body" cols="30" rows="10"></textarea>
+                                    {/* <button type="button">emoji</button> */}
+                                    <button type="submit">
+                                        <IoMdSend />
+                                    </button>
+                                </form>
+                            </>
+                            : <h2>sexo</h2>
                     }
                 </div>
             </div>
-        </main >
+        </div >
     );
 };
 

@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;0,700;1,400&display=swap");
 $base-color: #3d5af1;
 $border-dark: rgba($base-color, 0.88);
 $background-color: #09090a;
@@ -18,13 +19,16 @@ $text-color: #474554;
   height: 100%;
 }
 
+html,
 #root,
-body {
-  height: 100vh;
+body,
+.container {
+  height: 100%;
   width: 100%;
   margin: 0;
   background-color: $background-color;
   color: #ffffff;
+  font-family: "Roboto", sans-serif;
 }
 
 h1 {
@@ -47,7 +51,9 @@ button {
   outline: none;
   border: none;
 }
-// ============== Login ==============//
+// ===========================//
+//  Login
+// ===========================//
 .login {
   display: flex;
   justify-content: center;
@@ -146,80 +152,90 @@ button {
     }
   }
 }
-// ============== Main App ==============//
+// ===========================//
+//  Main App
+// ===========================//
 .container {
-  flex: 1;
-  height: 100%;
   display: flex;
-  h1 {
-    background-color: $base-color;
-    color: #ffffff;
-    box-sizing: border-box;
-    max-height: 70px;
-    height: 70px;
-    display: flex;
-    align-content: center;
-    flex-wrap: wrap;
-    border: none;
+  flex: 1;
+  flex-direction: column;
+  gap: clamp(0px, 30vw, 15px);
+  align-items: center;
+  padding: 30px 10px;
+  box-sizing: border-box;
+  overflow: hidden;
+  > * {
+    width: 100%;
+    max-width: 1200px;
   }
-  nav {
-    max-width: 60px;
-    flex: 1;
+  header nav {
+    height: 30px;
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    width: 100%;
+    justify-content: space-between;
+    margin-bottom: clamp(0px, 5vw, 50px);
     ul {
       display: flex;
-      flex-direction: column;
-      flex: 1;
-      .logout {
-        margin-top: auto;
+      gap: 20px;
+      li {
+        > * {
+          color: white;
+          text-decoration: none;
+          cursor: pointer;
+          font-size: 20px;
+          line-height: normal;
+          border-bottom: 1px solid transparent;
+          transition: 0.2s ease-in-out;
+          &:hover,
+          &.active {
+            color: $base-color;
+            border-bottom: 1px solid $base-color;
+          }
+        }
+        button {
+          background: transparent;
+          display: flex;
+          align-items: center;
+        }
       }
-    }
-    svg {
-      font-size: 26px;
-    }
-    > * {
-      width: 100%;
     }
     div {
-      padding: 20px 0;
-      background: $base-color;
       display: flex;
-      justify-content: center;
-      box-sizing: border-box;
-      max-height: 70px;
-      height: 70px;
-    }
-    ul {
-      li {
-        padding: 10px 0;
-        cursor: pointer;
-        display: flex;
-        justify-content: center;
-        border-left: 4px solid transparent;
-        transition: ease-in-out 0.3s;
-        &:focus,
-        &:hover,
-        &.active {
-          background-color: gray;
-          border-left: 4px solid $base-color;
-        }
-        svg {
-          font-size: 22px;
-        }
+      gap: 5px;
+      flex-direction: row;
+      align-items: center;
+      font-size: 20px;
+      img {
+        height: 100%;
       }
     }
   }
-
-  > div {
-    flex: 1;
-    background: #474554;
-    border-radius: 8px;
+  > nav {
+    display: flex;
+    background-color: #474554;
+    border-radius: 5px;
+    padding: 15px 20px;
+    box-sizing: border-box;
+    gap: 30px;
+    width: clamp(auto, 50vw, 600px);
+    div {
+      display: flex;
+      gap: 15px;
+      p {
+        cursor: pointer;
+      }
+    }
+    .status {
+      flex: 1;
+      justify-content: space-between;
+      border-left: 3px solid $base-color;
+      padding-left: 30px;
+    }
   }
 }
-
-// ============= Loader ==============//
+// ===========================//
+//  Loader
+// ===========================//
 .Loader {
   width: 100%;
   display: flex;
@@ -231,179 +247,155 @@ button {
     height: 500px;
   }
 }
-// ============= Body Container ==============//
+// ===========================//
+//  Chat Container
+// ===========================//
 main {
-  background-color: #ffffff;
   flex: 1;
   color: $text-color;
+  display: flex;
+  gap: 20px;
   h1 {
     border-bottom: 3px solid $base-color;
     padding-bottom: 8px;
     padding-left: 20px;
   }
-}
-
-// ============= Chat ==============//
-.chats {
-  display: flex;
-  flex-direction: column;
-  > div {
-    display: flex;
+  > * {
     flex: 1;
-    overflow: hidden;
-    > * {
-      flex: 1;
-      padding: 20px;
+    border-radius: 10px;
+    padding: 15px 20px;
+    box-sizing: border-box;
+    color: white;
+  }
+  nav {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    background-color: #474554;
+    max-width: clamp(100px, 20vw, 270px);
+    padding: 15px 20px;
+    box-sizing: border-box;
+    input {
+      background-color: transparent;
+      outline: none;
+      border: none;
+      border-bottom: 2px solid $base-color;
+      padding: 5px;
+      color: #ffffff;
+      font-size: 16px;
     }
-    > section {
-      max-width: 200px;
-      overflow-y: scroll;
-      h4 {
-        color: gray;
-      }
-      ul {
-        display: flex;
-        flex-direction: column;
-        gap: 15px;
-      }
-      li {
-        cursor: pointer;
-        border-left: 3px gray solid;
-        border-bottom: 3px gray solid;
-        padding: 10px;
-        background-color: lightcyan;
-
-        border-radius: 3px;
-
-        &.active {
-          border-left: 3px solid $base-color;
-          border-bottom: 3px solid $base-color;
-        }
-      }
-    }
-
-    > div {
+    ul {
       display: flex;
       flex-direction: column;
-      gap: 10px;
-      flex: 1;
-      background-color: #474554;
-      .chat {
-        flex-direction: column;
+      gap: 15px;
+      height: 100%;
+      overflow-y: auto;
+      overflow-x: hidden;
+      li {
+        cursor: pointer;
+        border-bottom: 1px solid gray;
+        padding: 10px 5px;
         display: flex;
-        gap: 15px;
-        flex: 1;
-        overflow-y: auto;
-        .header {
-          background-color: #f9f871;
-          border-radius: 3px;
-          padding: 15px 10px;
-          display: flex;
-          gap: 20px;
-          img {
-            height: 24px;
-          }
-          span {
-            font-size: 20px;
-            font-weight: 600;
-          }
-          div {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-            div {
-              gap: 0;
-              cursor: pointer;
-            }
-          }
-          p {
-            font-size: 20px;
-          }
+        gap: 8px;
+        align-items: center;
+        &.active,
+        &:hover {
+          border-bottom: 1px solid $base-color;
         }
-        svg {
-          font-size: 18px;
-          color: #e0002d;
-          cursor: pointer;
+        span {
+          font-size: 16px;
+          color: rgb(169 169 169);
         }
-        > ul {
-          display: flex;
-          flex-direction: column;
-          gap: 5px;
-          overflow-x: hidden;
-          li {
-            background-color: #ffffff;
-            border-radius: 3px;
-            padding: 10px;
-            width: fit-content;
-            display: flex;
-            gap: 10px;
-            &.user {
-              align-self: flex-end;
-              display: flex;
-              align-items: center;
-              div {
-                display: flex;
-                align-items: center;
-              }
-            }
-            img {
-              width: 24px;
-              cursor: pointer;
-            }
-          }
-        }
-      }
-      form {
-        width: 100%;
-        display: flex;
-        height: 50px;
-        background-color: white;
-        border-radius: 3px;
-        box-sizing: border-box;
-        padding: 10px 10px;
-        textarea {
-          flex: 1;
-          resize: none;
-          background-color: transparent;
-          border: none;
-          outline: none;
-        }
-
-        button {
-          background-color: transparent;
-          font-size: 24px;
-          display: flex;
+        img {
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
           justify-content: center;
-          align-items: center;
-          color: $base-color;
         }
       }
     }
   }
-  .userInfoContainer {
-    display: flex;
-    align-items: center;
-    .userInfo {
+  > div {
+    background-color: #474554;
+    padding: 0;
+    .chat {
+      height: 100%;
       display: flex;
-      gap: 10px;
-      background-color: #f9f871;
-      align-items: center;
-      padding: 20px;
-      border-radius: 3px;
-      width: 50%;
+      flex-direction: column;
+    }
+    .header {
+      display: flex;
       justify-content: space-between;
-      button {
-        cursor: pointer;
-        padding: 15px;
-        border: none;
-        font-size: 24px;
-        background-color: $base-color;
-        color: white;
+      align-items: center;
+      padding-bottom: 10px;
+      background-color: $base-color;
+      border-top-left-radius: 5px;
+      border-top-right-radius: 5px;
+      padding: 10px 20px;
+      h1 {
+        padding-bottom: 0;
       }
       img {
-        width: 100px;
-        height: 100px;
-        border-radius: 50%;
+        width: 24px;
+        height: 24px;
+      }
+      ul {
+        display: flex;
+        gap: 15px;
+      }
+      div:first-child {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        cursor: pointer;
+        p {
+          font-size: 18px;
+          font-weight: 500;
+        }
+      }
+    }
+    .body {
+      display: flex;
+      height: 100%;
+      flex-direction: column;
+      padding: 10px;
+      > * {
+        flex: 1;
+      }
+      ul {
+        margin: 0 !important;
+      }
+      form {
+        display: flex;
+        width: 100%;
+        max-height: 40px;
+        gap: 10px;
+        background-color: gray;
+        border-radius: 5px;
+        padding: 5px 10px;
+        box-sizing: border-box;
+        textarea {
+          resize: none;
+          flex: 1;
+          box-sizing: border-box;
+          background-color: transparent;
+          border: none;
+          outline: none;
+          color: white;
+        }
+        button {
+          background-color: transparent;
+          color: white;
+          font-size: 20px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+
+        button:last-child {
+          background-color: #3d5af1;
+          border-radius: 5px;
+        }
       }
     }
   }

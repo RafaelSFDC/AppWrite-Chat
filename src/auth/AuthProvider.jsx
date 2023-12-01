@@ -9,7 +9,7 @@ const AuthProvider = () => {
     useEffect(() => {
         checkUser()
     }, []);
-    if (state.loading) {
+    if (state.loading.start) {
         return <div className='Loader'>
             <Spinner />
         </div>
