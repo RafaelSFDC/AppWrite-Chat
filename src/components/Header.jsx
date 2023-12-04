@@ -11,19 +11,9 @@ const Header = () => {
             </div>
 
             <ul>
-                {/* <ListMotion>
-                    <Link to="/">
-                        Home
-                    </Link>
-                </ListMotion> */}
                 <ListMotion>
                     <Link to="/">
                         Chats
-                    </Link>
-                </ListMotion>
-                <ListMotion>
-                    <Link to="/settings">
-                        Settings
                     </Link>
                 </ListMotion>
                 <ListMotion>
