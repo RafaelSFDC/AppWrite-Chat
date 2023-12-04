@@ -15,25 +15,14 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <Routes>
         <Route element={<IsLogged />}>
           <Route path='/login' element={<Login />} />
+
           <Route path="/register" element={<Register />} />
         </Route>
         <Route element={<AuthProvider />}>
           <Route path="/" element={<App />} >
             <Route path="/" element={<Chats />} />
-            {/* <Route path="/settings" element={<Settings />} /> */}
-            {/* <Route path="/chats" element={<Chats2 />} /> */}
-            {/* <Route path="/users" element={<Users />} /> */}
           </Route>
         </Route>
-        {/* <Route element={<AuthProvider />}>
-          <Route path="/" element={<App />} >
-            <Route path="/" element={<Room />} />
-            <Route path="/chats" element={<Chats2 />} />
-            <Route path="/settings" element={<Settings />} />
-
-            <Route path="/users" element={<Users />} />
-          </Route>
-        </Route> */}
       </Routes>
     </BrowserRouter>
   </React.StrictMode>,
