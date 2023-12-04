@@ -1,13 +1,11 @@
 import ChatsMessages from "./ChatsMessages";
 import ChatsUserList from "./ChatsUserList";
-import ChatsUserInfo from './ChatsUserInfo';
 
-const Chats2 = () => {
+const Chats = () => {
   return <main>
     <ChatsUserList />
     <ChatsMessages />
-    {/* <ChatsUserInfo /> */}
   </main>;
 };
 
-export default Chats2;
+export default Chats;
