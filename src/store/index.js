@@ -1,12 +1,12 @@
 import { proxy } from "valtio";
 
-
 const state = proxy({
     logged: "",
     loading: {
         start: true,
         chats: true
     },
+    userId: "",
     userCollection: "",
     chatId: "65657670c056f50b1ca1",
     chats: [],

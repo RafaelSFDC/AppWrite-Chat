@@ -9,7 +9,6 @@ const Header = () => {
                 <CgUserlane />
                 <p>ChatWrite</p>
             </div>
-
             <ul>
                 <ListMotion>
                     <Link to="/">

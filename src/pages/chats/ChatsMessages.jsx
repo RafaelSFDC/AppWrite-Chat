@@ -73,6 +73,7 @@ const ChatsMessages = () => {
                                                 exit={{ scale: 0, opacity: 0 }}
                                                 className="user"
                                                 key={message.$id}
+
                                             >
                                                 <div>{message.body}</div>
                                                 {/* <motion.div whileHover={{ scale: 1.2 }}>

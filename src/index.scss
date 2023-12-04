@@ -18,6 +18,7 @@ $text-color: #474554;
   height: 100%;
   --mainColor: #3d5af1;
   --mainColor2: #008653;
+  --mainColor4: #e0002d;
   --secondColor: #474554;
   --thirdColor: #aca9bb;
   --textColor: #faf7ff;
@@ -239,15 +240,60 @@ button {
     div {
       display: flex;
       gap: 15px;
+      align-items: center;
       p {
         cursor: pointer;
       }
     }
     .status {
-      flex: 1;
-      justify-content: space-between;
+      flex: 3;
       border-left: 3px solid $base-color;
-      padding-left: 30px;
+      padding-left: 20px;
+      > div {
+        gap: 5px;
+      }
+      input {
+        font-size: 14px;
+        color: var(--thirdColor);
+        background-color: transparent;
+        outline: none;
+        border: none;
+        width: fit-content;
+        border-bottom: 2px solid var(--thirdColor);
+      }
+      .editing {
+        border-bottom: 2px solid var(--mainColor);
+      }
+      svg {
+        cursor: pointer;
+        font-size: 20px;
+        &.edit {
+          color: var(--mainColor);
+        }
+        &.confirm {
+          color: var(--mainColor2);
+          font-size: 24px;
+        }
+        &.cancel {
+          color: var(--mainColor4);
+          font-size: 24px;
+        }
+      }
+    }
+    .userPhoto {
+      flex: 1;
+      border-left: 3px solid $base-color;
+      padding-left: 20px;
+      align-items: center;
+      max-width: fit-content;
+      img {
+        width: 30px;
+        height: 30px;
+      }
+      svg {
+        cursor: pointer;
+        font-size: 20px;
+      }
     }
   }
 }

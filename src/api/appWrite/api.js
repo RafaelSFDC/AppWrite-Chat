@@ -19,6 +19,7 @@ export const checkUser = async () => {
             [Query.equal("accountId", response.$id)]
         )
         state.userCollection = userCollection.documents[0].$id
+        state.userInfo = userCollection.documents[0]
         return response
     } catch (error) {
         state.logged = false
@@ -222,6 +223,18 @@ export const appWriteCreateChat = async (id) => {
     console.log("RESPONSE", response)
     return response
 }
+//==================================
+// EDIT DOCUMENTS
+//==================================
+export const appWriteUpdateStatus = async (id) => {
+
+    const response = await databases.updateDocument(appwriteConfig.databaseId, appwriteConfig.userCollectionId, state.userCollection, {
+        status: id
+    })
+    console.log("RESPONSE", response)
+    return response
+}
+
 //==================================
 // DELETE DOCUMENTS
 //==================================
