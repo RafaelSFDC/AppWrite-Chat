@@ -6,10 +6,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Login from './pages/Login';
 import AuthProvider from './auth/AuthProvider';
 import IsLogged from './auth/IsLogged.jsx'
-import Room from './pages/Room.jsx'
-import Chats from './pages/Chats';
 import Settings from './pages/Settings';
-import Users from './pages/Users';
 import Register from './pages/Register.jsx'
 import Chats2 from './pages/chats/Chats2';
 
@@ -23,12 +20,20 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         </Route>
         <Route element={<AuthProvider />}>
           <Route path="/" element={<App />} >
+            <Route path="/" element={<Chats2 />} />
+            <Route path="/settings" element={<Settings />} />
+            {/* <Route path="/chats" element={<Chats2 />} /> */}
+            {/* <Route path="/users" element={<Users />} /> */}
+          </Route>
+        </Route>
+        {/* <Route element={<AuthProvider />}>
+          <Route path="/" element={<App />} >
             <Route path="/" element={<Room />} />
             <Route path="/chats" element={<Chats2 />} />
             <Route path="/settings" element={<Settings />} />
             <Route path="/users" element={<Users />} />
           </Route>
-        </Route>
+        </Route> */}
       </Routes>
     </BrowserRouter>
   </React.StrictMode>,

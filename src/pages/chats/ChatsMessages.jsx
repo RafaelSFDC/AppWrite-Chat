@@ -1,15 +1,36 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import state from './../../store/index';
 import { useSnapshot } from 'valtio';
-import { IoTrashBin } from 'react-icons/io5';
-import { appWriteDeleteMassege } from "../../api/appWrite/api";
+import { appWriteCreateMessage } from "../../api/appWrite/api";
 import Spinner from "../../components/Spinner";
 import { IoIosImages } from "react-icons/io";
 import { HiMicrophone } from "react-icons/hi2";
 import { BiSolidSend } from "react-icons/bi";
+import { formatForm } from '../../functions';
+import ButtonMotion from './../../components/framerMotion/Button';
+import { useEffect, useRef } from 'react';
+import { useMemo } from 'react';
 
 const ChatsMessages = () => {
     const snap = useSnapshot(state)
+    const chatContainerRef = useRef();
+    const chatRef = useMemo(() => snap.chats.documents?.[snap.activeChat]?.messages || [], [snap.activeChat, snap.chats.documents]);
+
+    useEffect(() => {
+        // Rola para baixo ao adicionar uma nova mensagem
+        if (chatContainerRef.current) {
+            chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+        }
+
+    }, [chatRef]);
+    const formHandler = async (e) => {
+        const form = await formatForm(e)
+        form.user = state.userCollection
+        form.chat = state.chats.documents[snap.activeChat].$id
+        appWriteCreateMessage(form)
+        e.target.reset()
+    }
+
     return <div>
         {
             snap.activeChat !== null && snap.chats ?
@@ -27,7 +48,7 @@ const ChatsMessages = () => {
                                 }
                             }
                             )}
-                            <motion.div whileHover={{ scale: 1.2 }}>
+                            <div>
                                 {/* <IoTrashBin onClick={() => deleteChat(snap.chats.documents[snap.activeChat].$id)} /> */}
                                 <ul>
                                     <li>Clear all</li>
@@ -35,52 +56,53 @@ const ChatsMessages = () => {
                                     <li>Profiles</li>
                                     <li>Search</li>
                                 </ul>
-                            </motion.div>
+                            </div>
                         </div>
                         <div className='body'>
-                            <ul>
+                            <ul ref={chatContainerRef}>
                                 <AnimatePresence>
-                                    <li>A</li>
                                     {snap.chats.documents[snap.activeChat].messages.map(message => (
                                         message.user[0].$id === state.userCollection ?
                                             <motion.li
                                                 transition={{
-                                                    duration: 0.8,
+                                                    duration: 0.3,
                                                     ease: "easeInOut"
                                                 }}
-                                                initial={{ x: -150, opacity: 0 }}
-                                                animate={{ x: 0, opacity: 1 }}
-                                                exit={{ x: 150, opacity: 0 }}
+                                                initial={{ scale: 0, opacity: 0 }}
+                                                animate={{ scale: 1, opacity: 1 }}
+                                                exit={{ scale: 0, opacity: 0 }}
                                                 className="user"
                                                 key={message.$id}
                                             >
-                                                {message.body}
-                                                <motion.div whileHover={{ scale: 1.2 }}>
+                                                <div>{message.body}</div>
+                                                {/* <motion.div whileHover={{ scale: 1.2 }}>
                                                     <IoTrashBin onClick={() => appWriteDeleteMassege(message)} />
-                                                </motion.div>
+                                                </motion.div> */}
                                             </motion.li>
                                             :
                                             <motion.li
                                                 transition={{
-                                                    duration: 0.8,
+                                                    duration: 0.3,
                                                     ease: "easeInOut"
                                                 }}
-                                                initial={{ x: -150, opacity: 0 }}
-                                                animate={{ x: 0, opacity: 1 }}
-                                                exit={{ x: 150, opacity: 0 }}
+                                                initial={{ scale: 0, opacity: 0 }}
+                                                animate={{ scale: 1, opacity: 1 }}
+                                                exit={{ scale: 0, opacity: 0 }}
                                                 key={message.$id}
                                             >
                                                 <motion.img whileHover={{ scale: 1.2 }} src={message.user[0].profileImage ? message.user[0].profileImage : "https://cdn-icons-png.flaticon.com/512/149/149071.png"} alt="userPhoto" />
-                                                {message.body}
+                                                <div>
+                                                    {message.body}
+                                                </div>
                                             </motion.li>
                                     ))}
                                 </AnimatePresence>
                             </ul>
-                            <form action="">
-                                <textarea name="body" id="body" cols="30" rows="10"></textarea>
+                            <form action="post" onSubmit={formHandler}>
+                                <textarea name="body" id="body" cols="30" rows="2"></textarea>
                                 <button><IoIosImages /></button>
                                 <button><HiMicrophone /></button>
-                                <button><BiSolidSend /></button>
+                                <ButtonMotion type="submit"><BiSolidSend /></ButtonMotion>
                             </form>
                         </div>
                     </div>

@@ -1,28 +1,28 @@
-import React from "react";
 import { Link } from "react-router-dom";
 import ListMotion from './framerMotion/ListMotion';
+import { CgUserlane } from "react-icons/cg";
 
 const Header = () => {
     return <header>
         <nav>
             <div>
-                <img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" alt="" />
+                <CgUserlane />
                 <p>ChatWrite</p>
             </div>
 
             <ul>
-                <ListMotion>
+                {/* <ListMotion>
                     <Link to="/">
                         Home
                     </Link>
-                </ListMotion>
+                </ListMotion> */}
                 <ListMotion>
-                    <Link to="/chats">
+                    <Link to="/">
                         Chats
                     </Link>
                 </ListMotion>
                 <ListMotion>
-                    <Link to="/users">
+                    <Link to="/settings">
                         Settings
                     </Link>
                 </ListMotion>

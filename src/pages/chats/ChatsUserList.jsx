@@ -2,6 +2,8 @@ import { useSnapshot } from "valtio";
 import state from "../../store";
 import ListMotion from './../../components/framerMotion/ListMotion';
 import { appWriteCreateChat } from "../../api/appWrite/api";
+import { FiSearch } from "react-icons/fi";
+import { toast } from 'sonner';
 
 const ChatsUserList = () => {
     const snap = useSnapshot(state)
@@ -10,11 +12,24 @@ const ChatsUserList = () => {
         state.activeUser = index
         state.activeUserId = id
         state.loading = false
-
+        if (snap.chatCrated) {
+            toast.error("Establishing connection with other user, please wait")
+            return
+        }
+        if (!snap.chats.documents) {
+            toast.error("Error: no chats available, please try again")
+            return
+        }
         const chatIndex = await snap.chats.documents.findIndex((chat) => chat.users.some((user) => user.$id === snap.userCollection) && chat.users.some((user) => user.$id === id))
-
         if (chatIndex === -1) {
-            createChat(id, index)
+            state.chatCrated = true
+            toast.promise(createChat(id, index), {
+                loading: 'Establishing connection',
+                success: (data) => {
+                    return `Connected`;
+                },
+                error: 'Error on the server, please try again',
+            });
         } else {
             state.activeChat = chatIndex
             return
@@ -23,10 +38,18 @@ const ChatsUserList = () => {
 
     const createChat = async (id) => {
         await appWriteCreateChat(id)
-        state.chatCrated = true
     }
-    return <nav>
-        <input type="text" name="search" id="search" placeholder="Search...." />
+    return <nav className="userList">
+        <div className="search-container">
+            <input
+                type="text"
+                name="search"
+                id="search"
+                placeholder="Search...."
+                className="search-input"
+            />
+            <FiSearch className="search-icon" />
+        </div>
         <ul>
             {snap.users.documents && snap.users.documents.length > 0 ? snap.users.documents.map((user, index) => {
                 if (user.$id === state.userCollection) {
